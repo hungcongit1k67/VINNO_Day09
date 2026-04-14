@@ -180,12 +180,12 @@ def analyze_traces(traces_dir: str = "artifacts/traces") -> dict:
 
     trace_files = [f for f in os.listdir(traces_dir) if f.endswith(".json")]
     if not trace_files:
-        print(f"⚠️  Không có trace files trong {traces_dir}.")
+        print(f"No trace files in {traces_dir}.")
         return {}
 
     traces = []
     for fname in trace_files:
-        with open(os.path.join(traces_dir, fname)) as f:
+        with open(os.path.join(traces_dir, fname), encoding="utf-8") as f:
             traces.append(json.load(f))
 
     # Compute metrics
