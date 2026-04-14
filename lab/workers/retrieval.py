@@ -28,17 +28,25 @@ WORKER_NAME = "retrieval_worker"
 DEFAULT_TOP_K = 3
 
 
+_MODEL_CACHE = {}  # module-level cache: model loaded once per process
+
+
 def _get_embedding_fn():
     """
-    Trả về embedding function.
-    TODO Sprint 1: Implement dùng OpenAI hoặc Sentence Transformers.
+    Trả về embedding function. Model được cache tại module level để tránh reload.
     """
     # Option A: Sentence Transformers (offline, không cần API key)
     try:
         from sentence_transformers import SentenceTransformer
-        model = SentenceTransformer("all-MiniLM-L6-v2")
+        if "st_model" not in _MODEL_CACHE:
+            import warnings
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                _MODEL_CACHE["st_model"] = SentenceTransformer("all-MiniLM-L6-v2")
+        model = _MODEL_CACHE["st_model"]
+
         def embed(text: str) -> list:
-            return model.encode([text])[0].tolist()
+            return model.encode([text], show_progress_bar=False)[0].tolist()
         return embed
     except ImportError:
         pass
@@ -54,11 +62,10 @@ def _get_embedding_fn():
     except ImportError:
         pass
 
-    # Fallback: random embeddings cho test (KHÔNG dùng production)
+    # Fallback: random embeddings (test only)
     import random
     def embed(text: str) -> list:
         return [random.random() for _ in range(384)]
-    print("⚠️  WARNING: Using random embeddings (test only). Install sentence-transformers.")
     return embed
 
 
