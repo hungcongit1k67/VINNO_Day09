@@ -1,145 +1,135 @@
-"""
-workers/synthesis.py — Synthesis Worker
-Sprint 2: Tổng hợp câu trả lời từ retrieved_chunks và policy_result.
-
-Input (từ AgentState):
-    - task: câu hỏi
-    - retrieved_chunks: evidence từ retrieval_worker
-    - policy_result: kết quả từ policy_tool_worker
-
-Output (vào AgentState):
-    - final_answer: câu trả lời cuối với citation
-    - sources: danh sách nguồn tài liệu được cite
-    - confidence: mức độ tin cậy (0.0 - 1.0)
-
-Gọi độc lập để test:
-    python workers/synthesis.py
-"""
-
 import os
+import json
 
 WORKER_NAME = "synthesis_worker"
 
-SYSTEM_PROMPT = """Bạn là trợ lý IT Helpdesk nội bộ.
+SYSTEM_PROMPT = """Bạn là trợ lý IT Helpdesk nội bộ chuyên nghiệp.
 
-Quy tắc nghiêm ngặt:
-1. CHỈ trả lời dựa vào context được cung cấp. KHÔNG dùng kiến thức ngoài.
-2. Nếu context không đủ để trả lời → nói rõ "Không đủ thông tin trong tài liệu nội bộ".
-3. Trích dẫn nguồn cuối mỗi câu quan trọng: [tên_file].
-4. Trả lời súc tích, có cấu trúc. Không dài dòng.
-5. Nếu có exceptions/ngoại lệ → nêu rõ ràng trước khi kết luận.
+QUY TẮC CỐT LÕI:
+1. NGUỒN TIN: Chỉ sử dụng thông tin từ "TÀI LIỆU THAM KHẢO" và "POLICY EXCEPTIONS" được cung cấp. KHÔNG dùng kiến thức bên ngoài.
+2. TRÍCH DẪN: Mỗi câu khẳng định quan trọng phải đi kèm nguồn trong ngoặc vuông ngay sau câu đó, ví dụ: [filename.txt].
+3. NGOẠI LỆ: Nếu có "POLICY EXCEPTIONS", bạn PHẢI ưu tiên trình bày các ngoại lệ này rõ ràng vì chúng quyết định kết quả cuối cùng.
+4. THÀNH THẬT: Nếu tài liệu không chứa câu trả lời, hãy phản hồi: "Tôi rất tiếc, tài liệu nội bộ hiện không có đủ thông tin để trả lời câu hỏi này."
+5. PHONG CÁCH: Trình bày súc tích, sử dụng bullet points cho danh sách.
 """
-
 
 def _call_llm(messages: list) -> str:
     """
-    Gọi LLM để tổng hợp câu trả lời.
-    TODO Sprint 2: Implement với OpenAI hoặc Gemini.
+    Hiện thực hóa gọi LLM. Ưu tiên OpenAI, fallback sang Gemini.
     """
-    # Option A: OpenAI
-    try:
-        from openai import OpenAI
-        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=messages,
-            temperature=0.1,  # Low temperature để grounded
-            max_tokens=500,
-        )
-        return response.choices[0].message.content
-    except Exception:
-        pass
+    # 1. Thử OpenAI
+    api_key_openai = os.getenv("OPENAI_API_KEY")
+    if api_key_openai:
+        try:
+            from openai import OpenAI
+            client = OpenAI(api_key=api_key_openai)
+            response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=messages,
+                temperature=0.0, # Giảm tối đa sự sáng tạo để tăng độ chính xác
+                max_tokens=800,
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            print(f"⚠️ OpenAI Error: {e}")
 
-    # Option B: Gemini
-    try:
-        import google.generativeai as genai
-        genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        combined = "\n".join([m["content"] for m in messages])
-        response = model.generate_content(combined)
-        return response.text
-    except Exception:
-        pass
+    # 2. Thử Gemini (Fallback)
+    api_key_gemini = os.getenv("GOOGLE_API_KEY")
+    if api_key_gemini:
+        try:
+            import google.generativeai as genai
+            genai.configure(api_key=api_key_gemini)
+            model = genai.GenerativeModel("gemini-1.5-flash")
+            # Convert OpenAI format to Gemini format
+            prompt = "\n".join([f"{m['role']}: {m['content']}" for m in messages])
+            response = model.generate_content(prompt)
+            return response.text
+        except Exception as e:
+            print(f"⚠️ Gemini Error: {e}")
 
-    # Fallback: trả về message báo lỗi (không hallucinate)
-    return "[SYNTHESIS ERROR] Không thể gọi LLM. Kiểm tra API key trong .env."
-
-
-def _build_context(chunks: list, policy_result: dict) -> str:
-    """Xây dựng context string từ chunks và policy result."""
-    parts = []
-
-    if chunks:
-        parts.append("=== TÀI LIỆU THAM KHẢO ===")
-        for i, chunk in enumerate(chunks, 1):
-            source = chunk.get("source", "unknown")
-            text = chunk.get("text", "")
-            score = chunk.get("score", 0)
-            parts.append(f"[{i}] Nguồn: {source} (relevance: {score:.2f})\n{text}")
-
-    if policy_result and policy_result.get("exceptions_found"):
-        parts.append("\n=== POLICY EXCEPTIONS ===")
-        for ex in policy_result["exceptions_found"]:
-            parts.append(f"- {ex.get('rule', '')}")
-
-    if not parts:
-        return "(Không có context)"
-
-    return "\n\n".join(parts)
+    return "[SYNTHESIS ERROR] Không thể kết nối tới bất kỳ LLM provider nào. Vui lòng kiểm tra API Key."
 
 
 def _estimate_confidence(chunks: list, answer: str, policy_result: dict) -> float:
     """
-    Ước tính confidence dựa vào:
-    - Số lượng và quality của chunks
-    - Có exceptions không
-    - Answer có abstain không
-
-    TODO Sprint 2: Có thể dùng LLM-as-Judge để tính confidence chính xác hơn.
+    Tính toán mức độ tin cậy dựa trên chất lượng retrieval và nội dung câu trả lời.
     """
-    if not chunks:
-        return 0.1  # Không có evidence → low confidence
-
-    if "Không đủ thông tin" in answer or "không có trong tài liệu" in answer.lower():
-        return 0.3  # Abstain → moderate-low
-
-    # Weighted average của chunk scores
+    # Khởi điểm
+    base_confidence = 0.0
+    
+    # 1. Check Retrieval Quality (Max 0.6)
     if chunks:
-        avg_score = sum(c.get("score", 0) for c in chunks) / len(chunks)
-    else:
-        avg_score = 0
+        # Lấy score cao nhất làm đại diện cho độ khớp tài liệu
+        top_score = max(c.get("score", 0) for c in chunks)
+        base_confidence += (top_score * 0.6)
+    
+    # 2. Check Answer Content (Penalty/Bonus)
+    abstain_phrases = ["không đủ thông tin", "không tìm thấy", "không có thông tin", "không được cung cấp"]
+    if any(phrase in answer.lower() for phrase in abstain_phrases):
+        return round(min(base_confidence, 0.3), 2) # Trả lời kiểu "không biết" thì confidence thấp
+    
+    # 3. Check Policy Result (Max 0.4)
+    if policy_result:
+        # Nếu đã qua phân tích policy rõ ràng (dù là từ chối hay đồng ý)
+        base_confidence += 0.3
+        # Bonus nếu không có mâu thuẫn phức tạp
+        if not policy_result.get("exceptions_found"):
+            base_confidence += 0.1
 
-    # Penalty nếu có exceptions (phức tạp hơn)
-    exception_penalty = 0.05 * len(policy_result.get("exceptions_found", []))
+    # 4. Final adjustments
+    # Giới hạn trong khoảng [0.1, 0.98]
+    final_score = min(0.98, max(0.1, base_confidence))
+    return round(final_score, 2)
 
-    confidence = min(0.95, avg_score - exception_penalty)
-    return round(max(0.1, confidence), 2)
+
+def _build_context(chunks: list, policy_result: dict) -> str:
+    """Xây dựng context string giàu thông tin hơn."""
+    context_blocks = []
+
+    if chunks:
+        context_blocks.append("=== TÀI LIỆU THAM KHẢO ===")
+        for i, chunk in enumerate(chunks, 1):
+            source = chunk.get("source", "N/A")
+            content = chunk.get("text", "").strip()
+            context_blocks.append(f"Tài liệu [{i}] (Nguồn: {source}):\n{content}")
+
+    if policy_result:
+        context_blocks.append("\n=== KẾT QUẢ PHÂN TÍCH CHÍNH SÁCH ===")
+        applies = "Được áp dụng" if policy_result.get("policy_applies") else "Bị từ chối/Cần xem xét lại"
+        context_blocks.append(f"Trạng thái: {applies}")
+        
+        exceptions = policy_result.get("exceptions_found", [])
+        if exceptions:
+            context_blocks.append("Các ngoại lệ phát hiện được:")
+            for ex in exceptions:
+                context_blocks.append(f"- {ex.get('rule')} (Loại: {ex.get('type')})")
+        
+        if policy_result.get("policy_version_note"):
+            context_blocks.append(f"Lưu ý phiên bản: {policy_result['policy_version_note']}")
+
+    return "\n\n".join(context_blocks) if context_blocks else "Không tìm thấy dữ liệu liên quan."
 
 
 def synthesize(task: str, chunks: list, policy_result: dict) -> dict:
     """
-    Tổng hợp câu trả lời từ chunks và policy context.
-
-    Returns:
-        {"answer": str, "sources": list, "confidence": float}
+    Thực hiện quy trình Synthesis.
     """
     context = _build_context(chunks, policy_result)
 
-    # Build messages
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {
             "role": "user",
-            "content": f"""Câu hỏi: {task}
-
-{context}
-
-Hãy trả lời câu hỏi dựa vào tài liệu trên."""
+            "content": f"CÂU HỎI CỦA NGƯỜI DÙNG: {task}\n\n{context}\n\nHãy tổng hợp câu trả lời:"
         }
     ]
 
     answer = _call_llm(messages)
-    sources = list({c.get("source", "unknown") for c in chunks})
+    
+    # Thu thập tất cả sources
+    sources = list(set([c.get("source") for c in chunks if c.get("source")]))
+    
+    # Tính toán độ tin cậy
     confidence = _estimate_confidence(chunks, answer, policy_result)
 
     return {

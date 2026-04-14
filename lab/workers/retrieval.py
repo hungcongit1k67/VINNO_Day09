@@ -17,6 +17,7 @@ Gọi độc lập để test:
 
 import os
 import sys
+import chromadb
 
 # ─────────────────────────────────────────────
 # Worker Contract (xem contracts/worker_contracts.yaml)
@@ -34,6 +35,9 @@ def _get_embedding_fn():
     TODO Sprint 1: Implement dùng OpenAI hoặc Sentence Transformers.
     """
     # Option A: Sentence Transformers (offline, không cần API key)
+    global _EMBED_FN_CACHE
+    if _EMBED_FN_CACHE is not None:
+        return _EMBED_FN_CACHE
     try:
         from sentence_transformers import SentenceTransformer
         model = SentenceTransformer("all-MiniLM-L6-v2")
@@ -46,20 +50,24 @@ def _get_embedding_fn():
     # Option B: OpenAI (cần API key)
     try:
         from openai import OpenAI
-        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        def embed(text: str) -> list:
-            resp = client.embeddings.create(input=text, model="text-embedding-3-small")
-            return resp.data[0].embedding
-        return embed
-    except ImportError:
+        api_key = os.getenv("OPENAI_API_KEY")
+        if api_key:
+            client = OpenAI(api_key=api_key)
+            def embed(text: str) -> list:
+                resp = client.embeddings.create(input=text, model="text-embedding-3-small")
+                return resp.data[0].embedding
+            _EMBED_FN_CACHE = embed
+            return _EMBED_FN_CACHE
+    except (ImportError, Exception):
         pass
 
     # Fallback: random embeddings cho test (KHÔNG dùng production)
     import random
     def embed(text: str) -> list:
         return [random.random() for _ in range(384)]
-    print("⚠️  WARNING: Using random embeddings (test only). Install sentence-transformers.")
-    return embed
+    print("  WARNING: Using random embeddings. Install sentence-transformers or set OPENAI_API_KEY.")
+    _EMBED_FN_CACHE = embed
+    return _EMBED_FN_CACHE
 
 
 def _get_collection():
@@ -77,51 +85,54 @@ def _get_collection():
             "day09_docs",
             metadata={"hnsw:space": "cosine"}
         )
-        print(f"⚠️  Collection 'day09_docs' chưa có data. Chạy index script trong README trước.")
+        print(f"  Collection 'day09_docs' chưa có data. Chạy index script trong README trước.")
     return collection
 
 
 def retrieve_dense(query: str, top_k: int = DEFAULT_TOP_K) -> list:
     """
-    Dense retrieval: embed query → query ChromaDB → trả về top_k chunks.
-
-    TODO Sprint 2: Implement phần này.
-    - Dùng _get_embedding_fn() để embed query
-    - Query collection với n_results=top_k
-    - Format result thành list of dict
-
-    Returns:
-        list of {"text": str, "source": str, "score": float, "metadata": dict}
+    Thực hiện Dense Retrieval.
     """
-    # TODO: Implement dense retrieval
-    embed = _get_embedding_fn()
-    query_embedding = embed(query)
+    # 1. Lấy hàm embed và tạo vector cho query
+    embed_fn = _get_embedding_fn()
+    query_vector = embed_fn(query)
 
     try:
+        # 2. Truy vấn ChromaDB
         collection = _get_collection()
         results = collection.query(
-            query_embeddings=[query_embedding],
+            query_embeddings=[query_vector],
             n_results=top_k,
             include=["documents", "distances", "metadatas"]
         )
 
+        # 3. Format kết quả trả về theo đúng contract
         chunks = []
-        for i, (doc, dist, meta) in enumerate(zip(
-            results["documents"][0],
-            results["distances"][0],
-            results["metadatas"][0]
-        )):
+        
+        # Kiểm tra nếu kết quả rỗng
+        if not results or not results["documents"] or len(results["documents"][0]) == 0:
+            return []
+
+        # ChromaDB trả về list lồng nhau: results["documents"][0]
+        for i in range(len(results["documents"][0])):
+            doc_text = results["documents"][0][i]
+            metadata = results["metadatas"][0][i] if results["metadatas"] else {}
+            distance = results["distances"][0][i] if results["distances"] else 0.5
+            
+            # Chuyển distance sang similarity score (với cosine: score càng cao càng giống)
+            score = round(1.0 - distance, 4)
+
             chunks.append({
-                "text": doc,
-                "source": meta.get("source", "unknown"),
-                "score": round(1 - dist, 4),  # cosine similarity
-                "metadata": meta,
+                "text": doc_text,
+                "source": metadata.get("source", "N/A"),
+                "score": score,
+                "metadata": metadata
             })
+            
         return chunks
 
     except Exception as e:
-        print(f"⚠️  ChromaDB query failed: {e}")
-        # Fallback: return empty (abstain)
+        print(f" ChromaDB Query Error: {str(e)}")
         return []
 
 
@@ -203,4 +214,4 @@ if __name__ == "__main__":
             print(f"    [{c['score']:.3f}] {c['source']}: {c['text'][:80]}...")
         print(f"  Sources: {result.get('retrieved_sources', [])}")
 
-    print("\n✅ retrieval_worker test done.")
+    print("\nRetrieval_worker test done.")
