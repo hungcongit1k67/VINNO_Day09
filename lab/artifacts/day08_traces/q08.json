@@ -1,0 +1,27 @@
+{
+  "question": "Quy trình xử lý sự cố P1 gồm mấy bước và bước đầu tiên là gì?",
+  "answer": "[1] Bước 1: Khách hàng gửi yêu cầu qua hệ thống ticket nội bộ với category \"Refund Request\".\nBước 2: CS Agent xem xét trong vòng 1 ngày làm việc và xác nhận điều kiện đủ điều kiện.\nBước 3: Nếu đủ điều kiện, chuyển yêu cầu sang Finance Team để xử lý hoàn tiền.\nBước 4: Finance Team xử lý trong 3-5 ngày làm việc và thông báo kết quả cho khách hàng.\n    Nguon: [policy/refund-v4.pdf]\n\n[2] Hoàn tiền — Điều kiện áp dụng:\nYêu cầu được gửi trong vòng 7 ngày kể từ thời điểm xác nhận đơn hàng.\n\nNgoại lệ không được hoàn tiền:\n- Sản phẩm thuộc danh mục hàng kỹ thuật số (license key, subscription).\n- Đơn hàng đã áp dụng mã giảm giá đặc biệt theo chương trình khuyến mãi Flash Sale.\n- Sản phẩm đã được kích hoạt hoặc đăng ký tài khoản.\n    Nguon: [policy/refund-v4.pdf]\n\n[3] Khách hàng được quyền yêu cầu hoàn tiền khi đáp ứng đủ các điều kiện sau:\n- Sản phẩm bị lỗi do nhà sản xuất, không phải do người dùng.\n- Yêu cầu được gửi trong vòng 7 ngày làm việc kể từ thời điểm xác nhận đơn hàng.\n- Đơn hàng chưa được sử dụng hoặc chưa bị mở seal.\n    Nguon: [policy/refund-v4.pdf]",
+  "sources": [
+    "policy/refund-v4.pdf"
+  ],
+  "confidence": 0.64,
+  "latency_ms": 32,
+  "chunks_retrieved": 3,
+  "workers_called": [
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "N/A",
+  "mcp_tools_used": [],
+  "hitl_triggered": false,
+  "policy_check": false,
+  "id": "q08",
+  "expected_sources": [
+    "sla_p1_2026.txt"
+  ],
+  "expected_answer": "Quy trình P1 gồm 5 bước: (1) Tiếp nhận — on-call engineer xác nhận severity trong 5 phút, (2) Thông báo tới Slack và email, (3) Triage và phân công trong 10 phút, (4) Xử lý với update mỗi 30 phút, (5) Resolution và incident report trong 24 giờ.",
+  "test_type": "single_worker",
+  "category": "SLA",
+  "difficulty": "medium",
+  "abstained": false
+}

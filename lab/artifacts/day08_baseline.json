@@ -1,0 +1,38 @@
+{
+  "generated_at": "2026-04-14T17:51:39.933678",
+  "agent_type": "single_agent_rag",
+  "description": "Day 08 style: embed → retrieve_top3 → extractive_synthesis. Không có supervisor, routing, MCP tools, HITL.",
+  "questions_file": "data/grading_questions.json",
+  "total_questions": 10,
+  "avg_confidence": 0.694,
+  "avg_latency_ms": 1332,
+  "abstain_rate": "0/10 (0%)",
+  "multi_hop_accuracy": "0/0 (N/A)",
+  "routing_distribution": {
+    "retrieval_worker+synthesis_worker": "10/10 (100%)"
+  },
+  "mcp_usage_rate": "0/10 (0%)",
+  "hitl_rate": "0/10 (0%)",
+  "top_sources": [
+    [
+      "it_helpdesk_faq.txt",
+      5
+    ],
+    [
+      "policy/refund-v4.pdf",
+      5
+    ],
+    [
+      "support/sla-p1-2026.pdf",
+      4
+    ],
+    [
+      "it/access-control-sop.md",
+      3
+    ],
+    [
+      "hr/leave-policy-2026.pdf",
+      1
+    ]
+  ]
+}

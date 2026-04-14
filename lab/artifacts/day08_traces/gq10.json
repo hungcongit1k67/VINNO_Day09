@@ -1,0 +1,25 @@
+{
+  "question": "Khách hàng mua sản phẩm trong chương trình Flash Sale, nhưng phát hiện sản phẩm bị lỗi từ nhà sản xuất và yêu cầu hoàn tiền trong vòng 5 ngày. Có được hoàn tiền không? Giải thích theo đúng chính sách.",
+  "answer": "[1] Khách hàng được quyền yêu cầu hoàn tiền khi đáp ứng đủ các điều kiện sau:\n- Sản phẩm bị lỗi do nhà sản xuất, không phải do người dùng.\n- Yêu cầu được gửi trong vòng 7 ngày làm việc kể từ thời điểm xác nhận đơn hàng.\n- Đơn hàng chưa được sử dụng hoặc chưa bị mở seal.\n    Nguon: [policy/refund-v4.pdf]\n\n[2] Hoàn tiền — Điều kiện áp dụng:\nYêu cầu được gửi trong vòng 7 ngày kể từ thời điểm xác nhận đơn hàng.\n\nNgoại lệ không được hoàn tiền:\n- Sản phẩm thuộc danh mục hàng kỹ thuật số (license key, subscription).\n- Đơn hàng đã áp dụng mã giảm giá đặc biệt theo chương trình khuyến mãi Flash Sale.\n- Sản phẩm đã được kích hoạt hoặc đăng ký tài khoản.\n    Nguon: [policy/refund-v4.pdf]\n\n[3] - Hoàn tiền qua phương thức thanh toán gốc: áp dụng trong 100% trường hợp đủ điều kiện.\n- Hoàn tiền qua credit nội bộ (store credit): khách hàng có thể chọn nhận store credit thay thế với giá trị 110% so với số tiền hoàn.\n    Nguon: [policy/refund-v4.pdf]",
+  "sources": [
+    "policy/refund-v4.pdf"
+  ],
+  "confidence": 0.77,
+  "latency_ms": 24,
+  "chunks_retrieved": 3,
+  "workers_called": [
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "N/A",
+  "mcp_tools_used": [],
+  "hitl_triggered": false,
+  "policy_check": false,
+  "id": "gq10",
+  "expected_sources": [],
+  "expected_answer": "",
+  "test_type": "single_worker",
+  "category": "",
+  "difficulty": "",
+  "abstained": false
+}

@@ -1,0 +1,116 @@
+{
+  "task": "SLA xử lý ticket P1 là bao lâu?",
+  "route_reason": "task chứa SLA/incident keyword: ['p1', 'sla', 'ticket']",
+  "risk_high": false,
+  "needs_tool": false,
+  "hitl_triggered": false,
+  "retrieved_chunks": [
+    {
+      "text": "Q: Laptop mới được cấp sau bao lâu khi vào công ty?\nA: Laptop được cấp trong ngày onboarding đầu tiên. Nếu có vấn đề, liên hệ HR hoặc IT Admin.\n\nQ: Laptop bị hỏng phải báo cáo như thế nào?\nA: Tạo ticket P2 hoặc P3 tùy mức độ nghiêm trọng. Mang thiết bị đến IT Room (tầng 3) để kiểm tra.",
+      "source": "it_helpdesk_faq.txt",
+      "score": 0.5604,
+      "metadata": {
+        "section": "Section 4: Thiết bị và phần cứng ===",
+        "source": "it_helpdesk_faq.txt",
+        "access": "internal",
+        "department": "unknown",
+        "chunk_id": "it_helpdesk_faq_004",
+        "chunk_index": 4,
+        "char_len": 286,
+        "effective_date": "unknown"
+      }
+    },
+    {
+      "text": "Ticket P1:\n- Phản hồi ban đầu (first response): 15 phút kể từ khi ticket được tạo.\n- Xử lý và khắc phục (resolution): 4 giờ.\n- Escalation: Tự động escalate lên Senior Engineer nếu không có phản hồi trong 10 phút.\n- Thông báo stakeholder: Ngay khi nhận ticket, update mỗi 30 phút cho đến khi resolve.\n\nTicket P2:\n- Phản hồi ban đầu: 2 giờ.\n- Xử lý và khắc phục: 1 ngày làm việc.\n- Escalation: Tự động escalate sau 90 phút không có phản hồi.\n\nTicket P3:\n- Phản hồi ban đầu: 1 ngày làm việc.\n- Xử lý và khắc phục: 5 ngày làm việc.\n\nTicket P4:\n- Phản hồi ban đầu: 3 ngày làm việc.\n- Xử lý và khắc phục: Theo sprint cycle (thông thường 2-4 tuần).",
+      "source": "support/sla-p1-2026.pdf",
+      "score": 0.5597,
+      "metadata": {
+        "section": "Phần 2: SLA theo mức độ ưu tiên ===",
+        "department": "IT",
+        "effective_date": "2026-01-15",
+        "source": "support/sla-p1-2026.pdf",
+        "chunk_id": "sla_p1_2026_001",
+        "char_len": 641,
+        "chunk_index": 1,
+        "access": "internal"
+      }
+    },
+    {
+      "text": "Q: Hộp thư đến đầy, phải làm gì?\nA: Xóa email cũ hoặc yêu cầu tăng dung lượng qua ticket IT-ACCESS. Dung lượng tiêu chuẩn là 50GB.\n\nQ: Tôi không nhận được email từ bên ngoài?\nA: Kiểm tra thư mục Spam trước. Nếu vẫn không có, tạo ticket P2 kèm địa chỉ email gửi và thời gian gửi.",
+      "source": "it_helpdesk_faq.txt",
+      "score": 0.5402,
+      "metadata": {
+        "source": "it_helpdesk_faq.txt",
+        "effective_date": "unknown",
+        "chunk_index": 5,
+        "section": "Section 5: Email và lịch ===",
+        "access": "internal",
+        "department": "unknown",
+        "char_len": 278,
+        "chunk_id": "it_helpdesk_faq_005"
+      }
+    }
+  ],
+  "retrieved_sources": [
+    "it_helpdesk_faq.txt",
+    "support/sla-p1-2026.pdf"
+  ],
+  "policy_result": {},
+  "mcp_tools_used": [],
+  "worker_io_logs": [
+    {
+      "worker": "retrieval_worker",
+      "input": {
+        "task": "SLA xử lý ticket P1 là bao lâu?",
+        "top_k": 3
+      },
+      "output": {
+        "chunks_count": 3,
+        "sources": [
+          "it_helpdesk_faq.txt",
+          "support/sla-p1-2026.pdf"
+        ]
+      },
+      "error": null
+    },
+    {
+      "worker": "synthesis_worker",
+      "input": {
+        "task": "SLA xử lý ticket P1 là bao lâu?",
+        "chunks_count": 3,
+        "has_policy": false
+      },
+      "output": {
+        "answer_length": 1324,
+        "sources": [
+          "it_helpdesk_faq.txt",
+          "support/sla-p1-2026.pdf"
+        ],
+        "confidence": 0.55
+      },
+      "error": null
+    }
+  ],
+  "final_answer": "[1] Q: Laptop mới được cấp sau bao lâu khi vào công ty?\nA: Laptop được cấp trong ngày onboarding đầu tiên. Nếu có vấn đề, liên hệ HR hoặc IT Admin.\n\nQ: Laptop bị hỏng phải báo cáo như thế nào?\nA: Tạo ticket P2 hoặc P3 tùy mức độ nghiêm trọng. Mang thiết bị đến IT Room (tầng 3) để kiểm tra.\n    Nguon: [it_helpdesk_faq.txt]\n\n[2] Ticket P1:\n- Phản hồi ban đầu (first response): 15 phút kể từ khi ticket được tạo.\n- Xử lý và khắc phục (resolution): 4 giờ.\n- Escalation: Tự động escalate lên Senior Engineer nếu không có phản hồi trong 10 phút.\n- Thông báo stakeholder: Ngay khi nhận ticket, update mỗi 30 phút cho đến khi resolve.\n\nTicket P2:\n- Phản hồi ban đầu: 2 giờ.\n- Xử lý và khắc phục: 1 ngày làm việc.\n- Escalation: Tự động escalate sau 90 phút không có phản hồi.\n\nTicket P3:\n- Phản hồi ban đầu: 1 ngày làm việc.\n- Xử lý và khắc phục: 5 ngày làm việc.\n\nTicket P4:\n- Phản hồi ban đầu: 3 ngày làm việc.\n- Xử lý và khắc phục: Theo sprint cycle (thông thường 2-4 tuần).\n    Nguon: [support/sla-p1-2026.pdf]\n\n[3] Q: Hộp thư đến đầy, phải làm gì?\nA: Xóa email cũ hoặc yêu cầu tăng dung lượng qua ticket IT-ACCESS. Dung lượng tiêu chuẩn là 50GB.\n\nQ: Tôi không nhận được email từ bên ngoài?\nA: Kiểm tra thư mục Spam trước. Nếu vẫn không có, tạo ticket P2 kèm địa chỉ email gửi và thời gian gửi.\n    Nguon: [it_helpdesk_faq.txt]",
+  "sources": [
+    "it_helpdesk_faq.txt",
+    "support/sla-p1-2026.pdf"
+  ],
+  "confidence": 0.55,
+  "history": [
+    "[supervisor] task: SLA xử lý ticket P1 là bao lâu?",
+    "[supervisor] route=retrieval_worker | needs_tool=False | risk_high=False",
+    "[supervisor] route_reason: task chứa SLA/incident keyword: ['p1', 'sla', 'ticket']",
+    "[retrieval_worker] retrieved 3 chunks from ['it_helpdesk_faq.txt', 'support/sla-p1-2026.pdf']",
+    "[synthesis_worker] answer generated, confidence=0.55, sources=['it_helpdesk_faq.txt', 'support/sla-p1-2026.pdf']",
+    "[graph] completed in 15911ms"
+  ],
+  "workers_called": [
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "retrieval_worker",
+  "latency_ms": 15911,
+  "run_id": "run_20260414_174705_2710",
+  "question_id": "q01"
+}

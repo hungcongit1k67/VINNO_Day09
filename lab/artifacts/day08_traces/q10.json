@@ -1,0 +1,28 @@
+{
+  "question": "Store credit khi hoàn tiền có giá trị bao nhiêu so với tiền gốc?",
+  "answer": "[1] - Hoàn tiền qua phương thức thanh toán gốc: áp dụng trong 100% trường hợp đủ điều kiện.\n- Hoàn tiền qua credit nội bộ (store credit): khách hàng có thể chọn nhận store credit thay thế với giá trị 110% so với số tiền hoàn.\n    Nguon: [policy/refund-v4.pdf]\n\n[2] Hoàn tiền — Điều kiện áp dụng:\nYêu cầu được gửi trong vòng 7 ngày kể từ thời điểm xác nhận đơn hàng.\n\nNgoại lệ không được hoàn tiền:\n- Sản phẩm thuộc danh mục hàng kỹ thuật số (license key, subscription).\n- Đơn hàng đã áp dụng mã giảm giá đặc biệt theo chương trình khuyến mãi Flash Sale.\n- Sản phẩm đã được kích hoạt hoặc đăng ký tài khoản.\n    Nguon: [policy/refund-v4.pdf]\n\n[3] Tài liệu này quy định quy trình cấp phép truy cập vào các hệ thống nội bộ của công ty.\nÁp dụng cho tất cả nhân viên, contractor, và third-party vendor.\n    Nguon: [it/access-control-sop.md]",
+  "sources": [
+    "policy/refund-v4.pdf",
+    "it/access-control-sop.md"
+  ],
+  "confidence": 0.63,
+  "latency_ms": 23,
+  "chunks_retrieved": 3,
+  "workers_called": [
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "N/A",
+  "mcp_tools_used": [],
+  "hitl_triggered": false,
+  "policy_check": false,
+  "id": "q10",
+  "expected_sources": [
+    "policy_refund_v4.txt"
+  ],
+  "expected_answer": "Khách hàng có thể chọn nhận store credit thay thế với giá trị 110% so với số tiền hoàn (tức là thêm 10% so với hoàn tiền gốc).",
+  "test_type": "single_worker",
+  "category": "Refund",
+  "difficulty": "medium",
+  "abstained": false
+}

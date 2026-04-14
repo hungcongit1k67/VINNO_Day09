@@ -1,0 +1,28 @@
+{
+  "question": "Nhân viên được làm remote tối đa mấy ngày mỗi tuần?",
+  "answer": "[1] 4.1 Điều kiện remote:\n- Nhân viên sau probation period có thể làm remote tối đa 2 ngày/tuần.\n- Team Lead phải phê duyệt lịch remote qua HR Portal.\n- Ngày onsite bắt buộc: Thứ 3 và Thứ 5 theo lịch team.\n\n4.2 Yêu cầu kỹ thuật khi remote:\n- Kết nối VPN bắt buộc khi làm việc với hệ thống nội bộ.\n- Camera bật trong các cuộc họp team.\n    Nguon: [hr/leave-policy-2026.pdf]\n\n[2] Q: Tôi cần cài phần mềm mới, phải làm gì?\nA: Gửi yêu cầu qua Jira project IT-SOFTWARE. Line Manager phải phê duyệt trước khi IT cài đặt.\n\nQ: Ai chịu trách nhiệm gia hạn license phần mềm?\nA: IT Procurement team quản lý tất cả license. Nhắc nhở sẽ được gửi 30 ngày trước khi hết hạn.\n    Nguon: [it_helpdesk_faq.txt]\n\n[3] Q: Phần mềm VPN nào công ty dùng?\nA: Công ty sử dụng Cisco AnyConnect. Download tại https://vpn.company.internal/download.\n\nQ: Tôi bị mất kết nối VPN liên tục, phải làm gì?\nA: Kiểm tra kết nối Internet trước. Nếu vẫn lỗi, tạo ticket P3 với log file VPN đính kèm.\n\nQ: VPN có giới hạn số thiết bị không?\nA: Mỗi tài khoản được kết nối VPN trên tối đa 2 thiết bị cùng lúc.\n    Nguon: [it_helpdesk_faq.txt]",
+  "sources": [
+    "hr/leave-policy-2026.pdf",
+    "it_helpdesk_faq.txt"
+  ],
+  "confidence": 0.63,
+  "latency_ms": 18,
+  "chunks_retrieved": 3,
+  "workers_called": [
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "N/A",
+  "mcp_tools_used": [],
+  "hitl_triggered": false,
+  "policy_check": false,
+  "id": "q05",
+  "expected_sources": [
+    "hr_leave_policy.txt"
+  ],
+  "expected_answer": "Nhân viên sau probation period có thể làm remote tối đa 2 ngày/tuần với điều kiện được Team Lead phê duyệt.",
+  "test_type": "single_worker",
+  "category": "HR Policy",
+  "difficulty": "easy",
+  "abstained": false
+}

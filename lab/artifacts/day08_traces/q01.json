@@ -1,0 +1,28 @@
+{
+  "question": "SLA xử lý ticket P1 là bao lâu?",
+  "answer": "[1] Q: Laptop mới được cấp sau bao lâu khi vào công ty?\nA: Laptop được cấp trong ngày onboarding đầu tiên. Nếu có vấn đề, liên hệ HR hoặc IT Admin.\n\nQ: Laptop bị hỏng phải báo cáo như thế nào?\nA: Tạo ticket P2 hoặc P3 tùy mức độ nghiêm trọng. Mang thiết bị đến IT Room (tầng 3) để kiểm tra.\n    Nguon: [it_helpdesk_faq.txt]\n\n[2] Ticket P1:\n- Phản hồi ban đầu (first response): 15 phút kể từ khi ticket được tạo.\n- Xử lý và khắc phục (resolution): 4 giờ.\n- Escalation: Tự động escalate lên Senior Engineer nếu không có phản hồi trong 10 phút.\n- Thông báo stakeholder: Ngay khi nhận ticket, update mỗi 30 phút cho đến khi resolve.\n\nTicket P2:\n- Phản hồi ban đầu: 2 giờ.\n- Xử lý và khắc phục: 1 ngày làm việc.\n- Escalation: Tự động escalate sau 90 phút không có phản hồi.\n\nTicket P3:\n- Phản hồi ban đầu: 1 ngày làm việc.\n- Xử lý và khắc phục: 5 ngày làm việc.\n\nTicket P4:\n- Phản hồi ban đầu: 3 ngày làm việc.\n- Xử lý và khắc phục: Theo sprint cycle (thông thường 2-4 tuần).\n    Nguon: [support/sla-p1-2026.pdf]\n\n[3] Q: Hộp thư đến đầy, phải làm gì?\nA: Xóa email cũ hoặc yêu cầu tăng dung lượng qua ticket IT-ACCESS. Dung lượng tiêu chuẩn là 50GB.\n\nQ: Tôi không nhận được email từ bên ngoài?\nA: Kiểm tra thư mục Spam trước. Nếu vẫn không có, tạo ticket P2 kèm địa chỉ email gửi và thời gian gửi.\n    Nguon: [it_helpdesk_faq.txt]",
+  "sources": [
+    "it_helpdesk_faq.txt",
+    "support/sla-p1-2026.pdf"
+  ],
+  "confidence": 0.55,
+  "latency_ms": 13328,
+  "chunks_retrieved": 3,
+  "workers_called": [
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "N/A",
+  "mcp_tools_used": [],
+  "hitl_triggered": false,
+  "policy_check": false,
+  "id": "q01",
+  "expected_sources": [
+    "sla_p1_2026.txt"
+  ],
+  "expected_answer": "Ticket P1 có SLA phản hồi ban đầu 15 phút và thời gian xử lý (resolution) là 4 giờ.",
+  "test_type": "single_worker",
+  "category": "SLA",
+  "difficulty": "easy",
+  "abstained": false
+}

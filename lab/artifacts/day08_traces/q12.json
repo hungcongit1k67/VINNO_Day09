@@ -1,0 +1,27 @@
+{
+  "question": "Khách hàng đặt đơn ngày 31/01/2026 và yêu cầu hoàn tiền ngày 07/02/2026. Sản phẩm lỗi nhà sản xuất, chưa kích hoạt, không phải Flash Sale. Được hoàn tiền không?",
+  "answer": "[1] Hoàn tiền — Điều kiện áp dụng:\nYêu cầu được gửi trong vòng 7 ngày kể từ thời điểm xác nhận đơn hàng.\n\nNgoại lệ không được hoàn tiền:\n- Sản phẩm thuộc danh mục hàng kỹ thuật số (license key, subscription).\n- Đơn hàng đã áp dụng mã giảm giá đặc biệt theo chương trình khuyến mãi Flash Sale.\n- Sản phẩm đã được kích hoạt hoặc đăng ký tài khoản.\n    Nguon: [policy/refund-v4.pdf]\n\n[2] Khách hàng được quyền yêu cầu hoàn tiền khi đáp ứng đủ các điều kiện sau:\n- Sản phẩm bị lỗi do nhà sản xuất, không phải do người dùng.\n- Yêu cầu được gửi trong vòng 7 ngày làm việc kể từ thời điểm xác nhận đơn hàng.\n- Đơn hàng chưa được sử dụng hoặc chưa bị mở seal.\n    Nguon: [policy/refund-v4.pdf]\n\n[3] Chính sách này áp dụng cho tất cả các đơn hàng được đặt trên hệ thống nội bộ kể từ ngày 01/02/2026.\nCác đơn hàng đặt trước ngày có hiệu lực sẽ áp dụng theo chính sách hoàn tiền phiên bản 3.\n    Nguon: [policy/refund-v4.pdf]",
+  "sources": [
+    "policy/refund-v4.pdf"
+  ],
+  "confidence": 0.79,
+  "latency_ms": 26,
+  "chunks_retrieved": 3,
+  "workers_called": [
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "N/A",
+  "mcp_tools_used": [],
+  "hitl_triggered": false,
+  "policy_check": false,
+  "id": "q12",
+  "expected_sources": [
+    "policy_refund_v4.txt"
+  ],
+  "expected_answer": "Đây là trường hợp phức tạp về temporal scoping: Đơn đặt ngày 31/01/2026 (trước ngày 01/02/2026) nên áp dụng chính sách hoàn tiền phiên bản 3, không phải v4. Tài liệu hiện tại chỉ có chính sách v4. Cần xác nhận với CS Team về nội dung chính sách v3.",
+  "test_type": "temporal_scoping",
+  "category": "Refund",
+  "difficulty": "hard",
+  "abstained": false
+}

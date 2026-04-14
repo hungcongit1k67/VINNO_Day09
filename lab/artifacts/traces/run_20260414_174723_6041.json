@@ -1,0 +1,116 @@
+{
+  "task": "Nhân viên được làm remote tối đa mấy ngày mỗi tuần?",
+  "route_reason": "default: không khớp policy/SLA keyword → retrieval_worker",
+  "risk_high": false,
+  "needs_tool": false,
+  "hitl_triggered": false,
+  "retrieved_chunks": [
+    {
+      "text": "4.1 Điều kiện remote:\n- Nhân viên sau probation period có thể làm remote tối đa 2 ngày/tuần.\n- Team Lead phải phê duyệt lịch remote qua HR Portal.\n- Ngày onsite bắt buộc: Thứ 3 và Thứ 5 theo lịch team.\n\n4.2 Yêu cầu kỹ thuật khi remote:\n- Kết nối VPN bắt buộc khi làm việc với hệ thống nội bộ.\n- Camera bật trong các cuộc họp team.",
+      "source": "hr/leave-policy-2026.pdf",
+      "score": 0.6794,
+      "metadata": {
+        "char_len": 330,
+        "source": "hr/leave-policy-2026.pdf",
+        "chunk_id": "hr_leave_policy_003",
+        "department": "HR",
+        "access": "internal",
+        "effective_date": "2026-01-01",
+        "section": "Phần 4: Remote work policy ===",
+        "chunk_index": 3
+      }
+    },
+    {
+      "text": "Q: Tôi cần cài phần mềm mới, phải làm gì?\nA: Gửi yêu cầu qua Jira project IT-SOFTWARE. Line Manager phải phê duyệt trước khi IT cài đặt.\n\nQ: Ai chịu trách nhiệm gia hạn license phần mềm?\nA: IT Procurement team quản lý tất cả license. Nhắc nhở sẽ được gửi 30 ngày trước khi hết hạn.",
+      "source": "it_helpdesk_faq.txt",
+      "score": 0.6059,
+      "metadata": {
+        "section": "Section 3: Phần mềm và license ===",
+        "access": "internal",
+        "char_len": 281,
+        "chunk_index": 3,
+        "source": "it_helpdesk_faq.txt",
+        "chunk_id": "it_helpdesk_faq_003",
+        "department": "unknown",
+        "effective_date": "unknown"
+      }
+    },
+    {
+      "text": "Q: Phần mềm VPN nào công ty dùng?\nA: Công ty sử dụng Cisco AnyConnect. Download tại https://vpn.company.internal/download.\n\nQ: Tôi bị mất kết nối VPN liên tục, phải làm gì?\nA: Kiểm tra kết nối Internet trước. Nếu vẫn lỗi, tạo ticket P3 với log file VPN đính kèm.\n\nQ: VPN có giới hạn số thiết bị không?\nA: Mỗi tài khoản được kết nối VPN trên tối đa 2 thiết bị cùng lúc.",
+      "source": "it_helpdesk_faq.txt",
+      "score": 0.5924,
+      "metadata": {
+        "effective_date": "unknown",
+        "chunk_id": "it_helpdesk_faq_002",
+        "chunk_index": 2,
+        "char_len": 368,
+        "access": "internal",
+        "department": "unknown",
+        "source": "it_helpdesk_faq.txt",
+        "section": "Section 2: VPN và kết nối từ xa ==="
+      }
+    }
+  ],
+  "retrieved_sources": [
+    "it_helpdesk_faq.txt",
+    "hr/leave-policy-2026.pdf"
+  ],
+  "policy_result": {},
+  "mcp_tools_used": [],
+  "worker_io_logs": [
+    {
+      "worker": "retrieval_worker",
+      "input": {
+        "task": "Nhân viên được làm remote tối đa mấy ngày mỗi tuần?",
+        "top_k": 3
+      },
+      "output": {
+        "chunks_count": 3,
+        "sources": [
+          "it_helpdesk_faq.txt",
+          "hr/leave-policy-2026.pdf"
+        ]
+      },
+      "error": null
+    },
+    {
+      "worker": "synthesis_worker",
+      "input": {
+        "task": "Nhân viên được làm remote tối đa mấy ngày mỗi tuần?",
+        "chunks_count": 3,
+        "has_policy": false
+      },
+      "output": {
+        "answer_length": 1099,
+        "sources": [
+          "hr/leave-policy-2026.pdf",
+          "it_helpdesk_faq.txt"
+        ],
+        "confidence": 0.63
+      },
+      "error": null
+    }
+  ],
+  "final_answer": "[1] 4.1 Điều kiện remote:\n- Nhân viên sau probation period có thể làm remote tối đa 2 ngày/tuần.\n- Team Lead phải phê duyệt lịch remote qua HR Portal.\n- Ngày onsite bắt buộc: Thứ 3 và Thứ 5 theo lịch team.\n\n4.2 Yêu cầu kỹ thuật khi remote:\n- Kết nối VPN bắt buộc khi làm việc với hệ thống nội bộ.\n- Camera bật trong các cuộc họp team.\n    Nguon: [hr/leave-policy-2026.pdf]\n\n[2] Q: Tôi cần cài phần mềm mới, phải làm gì?\nA: Gửi yêu cầu qua Jira project IT-SOFTWARE. Line Manager phải phê duyệt trước khi IT cài đặt.\n\nQ: Ai chịu trách nhiệm gia hạn license phần mềm?\nA: IT Procurement team quản lý tất cả license. Nhắc nhở sẽ được gửi 30 ngày trước khi hết hạn.\n    Nguon: [it_helpdesk_faq.txt]\n\n[3] Q: Phần mềm VPN nào công ty dùng?\nA: Công ty sử dụng Cisco AnyConnect. Download tại https://vpn.company.internal/download.\n\nQ: Tôi bị mất kết nối VPN liên tục, phải làm gì?\nA: Kiểm tra kết nối Internet trước. Nếu vẫn lỗi, tạo ticket P3 với log file VPN đính kèm.\n\nQ: VPN có giới hạn số thiết bị không?\nA: Mỗi tài khoản được kết nối VPN trên tối đa 2 thiết bị cùng lúc.\n    Nguon: [it_helpdesk_faq.txt]",
+  "sources": [
+    "hr/leave-policy-2026.pdf",
+    "it_helpdesk_faq.txt"
+  ],
+  "confidence": 0.63,
+  "history": [
+    "[supervisor] task: Nhân viên được làm remote tối đa mấy ngày mỗi tuần?",
+    "[supervisor] route=retrieval_worker | needs_tool=False | risk_high=False",
+    "[supervisor] route_reason: default: không khớp policy/SLA keyword → retrieval_worker",
+    "[retrieval_worker] retrieved 3 chunks from ['it_helpdesk_faq.txt', 'hr/leave-policy-2026.pdf']",
+    "[synthesis_worker] answer generated, confidence=0.63, sources=['hr/leave-policy-2026.pdf', 'it_helpdesk_faq.txt']",
+    "[graph] completed in 954ms"
+  ],
+  "workers_called": [
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "retrieval_worker",
+  "latency_ms": 954,
+  "run_id": "run_20260414_174723_6041",
+  "question_id": "q05"
+}

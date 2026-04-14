@@ -1,0 +1,29 @@
+{
+  "question": "Ticket P1 không được phản hồi sau 10 phút. Hệ thống tự động làm gì?",
+  "answer": "[1] Q: Hộp thư đến đầy, phải làm gì?\nA: Xóa email cũ hoặc yêu cầu tăng dung lượng qua ticket IT-ACCESS. Dung lượng tiêu chuẩn là 50GB.\n\nQ: Tôi không nhận được email từ bên ngoài?\nA: Kiểm tra thư mục Spam trước. Nếu vẫn không có, tạo ticket P2 kèm địa chỉ email gửi và thời gian gửi.\n    Nguon: [it_helpdesk_faq.txt]\n\n[2] Ticket P1:\n- Phản hồi ban đầu (first response): 15 phút kể từ khi ticket được tạo.\n- Xử lý và khắc phục (resolution): 4 giờ.\n- Escalation: Tự động escalate lên Senior Engineer nếu không có phản hồi trong 10 phút.\n- Thông báo stakeholder: Ngay khi nhận ticket, update mỗi 30 phút cho đến khi resolve.\n\nTicket P2:\n- Phản hồi ban đầu: 2 giờ.\n- Xử lý và khắc phục: 1 ngày làm việc.\n- Escalation: Tự động escalate sau 90 phút không có phản hồi.\n\nTicket P3:\n- Phản hồi ban đầu: 1 ngày làm việc.\n- Xử lý và khắc phục: 5 ngày làm việc.\n\nTicket P4:\n- Phản hồi ban đầu: 3 ngày làm việc.\n- Xử lý và khắc phục: Theo sprint cycle (thông thường 2-4 tuần).\n    Nguon: [support/sla-p1-2026.pdf]\n\n[3] Hoàn tiền — Điều kiện áp dụng:\nYêu cầu được gửi trong vòng 7 ngày kể từ thời điểm xác nhận đơn hàng.\n\nNgoại lệ không được hoàn tiền:\n- Sản phẩm thuộc danh mục hàng kỹ thuật số (license key, subscription).\n- Đơn hàng đã áp dụng mã giảm giá đặc biệt theo chương trình khuyến mãi Flash Sale.\n- Sản phẩm đã được kích hoạt hoặc đăng ký tài khoản.\n    Nguon: [policy/refund-v4.pdf]",
+  "sources": [
+    "it_helpdesk_faq.txt",
+    "support/sla-p1-2026.pdf",
+    "policy/refund-v4.pdf"
+  ],
+  "confidence": 0.7,
+  "latency_ms": 24,
+  "chunks_retrieved": 3,
+  "workers_called": [
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "N/A",
+  "mcp_tools_used": [],
+  "hitl_triggered": false,
+  "policy_check": false,
+  "id": "q06",
+  "expected_sources": [
+    "sla_p1_2026.txt"
+  ],
+  "expected_answer": "Ticket P1 tự động escalate lên Senior Engineer nếu không có phản hồi trong 10 phút. Đồng thời gửi thông báo tới Slack #incident-p1 và PagerDuty.",
+  "test_type": "single_worker",
+  "category": "SLA",
+  "difficulty": "medium",
+  "abstained": false
+}

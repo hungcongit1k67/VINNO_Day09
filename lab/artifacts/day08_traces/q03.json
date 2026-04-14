@@ -1,0 +1,28 @@
+{
+  "question": "Ai phải phê duyệt để cấp quyền Level 3?",
+  "answer": "[1] Escalation chỉ áp dụng khi cần thay đổi quyền hệ thống ngoài quy trình thông thường.\nVí dụ: Khẩn cấp trong sự cố P1, cần cấp quyền tạm thời để fix incident.\n\nQuy trình escalation khẩn cấp:\n1. On-call IT Admin có thể cấp quyền tạm thời (max 24 giờ) sau khi được Tech Lead phê duyệt bằng lời.\n2. Sau 24 giờ, phải có ticket chính thức hoặc quyền bị thu hồi tự động.\n3. Mọi quyền tạm thời phải được ghi log vào hệ thống Security Audit.\n    Nguon: [it/access-control-sop.md]\n\n[2] Q: Laptop mới được cấp sau bao lâu khi vào công ty?\nA: Laptop được cấp trong ngày onboarding đầu tiên. Nếu có vấn đề, liên hệ HR hoặc IT Admin.\n\nQ: Laptop bị hỏng phải báo cáo như thế nào?\nA: Tạo ticket P2 hoặc P3 tùy mức độ nghiêm trọng. Mang thiết bị đến IT Room (tầng 3) để kiểm tra.\n    Nguon: [it_helpdesk_faq.txt]\n\n[3] Tài liệu này quy định quy trình cấp phép truy cập vào các hệ thống nội bộ của công ty.\nÁp dụng cho tất cả nhân viên, contractor, và third-party vendor.\n    Nguon: [it/access-control-sop.md]",
+  "sources": [
+    "it/access-control-sop.md",
+    "it_helpdesk_faq.txt"
+  ],
+  "confidence": 0.59,
+  "latency_ms": 25,
+  "chunks_retrieved": 3,
+  "workers_called": [
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "N/A",
+  "mcp_tools_used": [],
+  "hitl_triggered": false,
+  "policy_check": false,
+  "id": "q03",
+  "expected_sources": [
+    "access_control_sop.txt"
+  ],
+  "expected_answer": "Level 3 (Elevated Access) cần phê duyệt từ Line Manager, IT Admin, và IT Security — ba người phê duyệt.",
+  "test_type": "single_worker",
+  "category": "Access Control",
+  "difficulty": "easy",
+  "abstained": false
+}

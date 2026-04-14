@@ -1,0 +1,26 @@
+{
+  "question": "Theo quy định IT nội bộ, nhân viên phải đổi mật khẩu sau bao nhiêu ngày? Và hệ thống cảnh báo trước bao nhiêu ngày?",
+  "answer": "[1] Quyền phải được thu hồi trong các trường hợp:\n- Nhân viên nghỉ việc: Thu hồi ngay trong ngày cuối.\n- Hết hạn contract: Thu hồi đúng ngày hết hạn.\n- Chuyển bộ phận: Điều chỉnh trong 3 ngày làm việc.\n    Nguon: [it/access-control-sop.md]\n\n[2] Tài liệu này quy định quy trình cấp phép truy cập vào các hệ thống nội bộ của công ty.\nÁp dụng cho tất cả nhân viên, contractor, và third-party vendor.\n    Nguon: [it/access-control-sop.md]\n\n[3] Chính sách này áp dụng cho tất cả các đơn hàng được đặt trên hệ thống nội bộ kể từ ngày 01/02/2026.\nCác đơn hàng đặt trước ngày có hiệu lực sẽ áp dụng theo chính sách hoàn tiền phiên bản 3.\n    Nguon: [policy/refund-v4.pdf]",
+  "sources": [
+    "it/access-control-sop.md",
+    "policy/refund-v4.pdf"
+  ],
+  "confidence": 0.68,
+  "latency_ms": 22,
+  "chunks_retrieved": 3,
+  "workers_called": [
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "N/A",
+  "mcp_tools_used": [],
+  "hitl_triggered": false,
+  "policy_check": false,
+  "id": "gq08",
+  "expected_sources": [],
+  "expected_answer": "",
+  "test_type": "single_worker",
+  "category": "",
+  "difficulty": "",
+  "abstained": false
+}

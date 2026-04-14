@@ -1,0 +1,26 @@
+{
+  "question": "Một nhân viên mới đang trong probation period muốn làm remote vì lý do cá nhân. Yêu cầu này có được chấp thuận không? Điều kiện để được làm remote là gì?",
+  "answer": "[1] 4.1 Điều kiện remote:\n- Nhân viên sau probation period có thể làm remote tối đa 2 ngày/tuần.\n- Team Lead phải phê duyệt lịch remote qua HR Portal.\n- Ngày onsite bắt buộc: Thứ 3 và Thứ 5 theo lịch team.\n\n4.2 Yêu cầu kỹ thuật khi remote:\n- Kết nối VPN bắt buộc khi làm việc với hệ thống nội bộ.\n- Camera bật trong các cuộc họp team.\n    Nguon: [hr/leave-policy-2026.pdf]\n\n[2] Q: Tôi cần cài phần mềm mới, phải làm gì?\nA: Gửi yêu cầu qua Jira project IT-SOFTWARE. Line Manager phải phê duyệt trước khi IT cài đặt.\n\nQ: Ai chịu trách nhiệm gia hạn license phần mềm?\nA: IT Procurement team quản lý tất cả license. Nhắc nhở sẽ được gửi 30 ngày trước khi hết hạn.\n    Nguon: [it_helpdesk_faq.txt]\n\n[3] Q: Tôi quên mật khẩu, phải làm gì?\nA: Truy cập https://sso.company.internal/reset hoặc liên hệ Helpdesk qua ext. 9000. Mật khẩu mới sẽ được gửi qua email công ty trong vòng 5 phút.\n\nQ: Tài khoản bị khóa sau bao nhiêu lần đăng nhập sai?\nA: Tài khoản bị khóa sau 5 lần đăng nhập sai liên tiếp. Để mở khóa, liên hệ IT Helpdesk hoặc tự reset qua portal SSO.\n\nQ: Mật khẩu cần thay đổi định kỳ không?\nA: Có. Mật khẩu phải được thay đổi mỗi 90 ngày. Hệ thống sẽ nhắc nhở 7 ngày trước khi hết hạn.\n    Nguon: [it_helpdesk_faq.txt]",
+  "sources": [
+    "hr/leave-policy-2026.pdf",
+    "it_helpdesk_faq.txt"
+  ],
+  "confidence": 0.7,
+  "latency_ms": 22,
+  "chunks_retrieved": 3,
+  "workers_called": [
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "N/A",
+  "mcp_tools_used": [],
+  "hitl_triggered": false,
+  "policy_check": false,
+  "id": "gq06",
+  "expected_sources": [],
+  "expected_answer": "",
+  "test_type": "single_worker",
+  "category": "",
+  "difficulty": "",
+  "abstained": false
+}

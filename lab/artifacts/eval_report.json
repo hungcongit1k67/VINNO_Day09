@@ -1,0 +1,83 @@
+{
+  "generated_at": "2026-04-14T17:51:58.299227",
+  "day08_single_agent": {
+    "generated_at": "2026-04-14T17:51:39.933678",
+    "agent_type": "single_agent_rag",
+    "description": "Day 08 style: embed → retrieve_top3 → extractive_synthesis. Không có supervisor, routing, MCP tools, HITL.",
+    "questions_file": "data/grading_questions.json",
+    "total_questions": 10,
+    "avg_confidence": 0.694,
+    "avg_latency_ms": 1332,
+    "abstain_rate": "0/10 (0%)",
+    "multi_hop_accuracy": "0/0 (N/A)",
+    "routing_distribution": {
+      "retrieval_worker+synthesis_worker": "10/10 (100%)"
+    },
+    "mcp_usage_rate": "0/10 (0%)",
+    "hitl_rate": "0/10 (0%)",
+    "top_sources": [
+      [
+        "it_helpdesk_faq.txt",
+        5
+      ],
+      [
+        "policy/refund-v4.pdf",
+        5
+      ],
+      [
+        "support/sla-p1-2026.pdf",
+        4
+      ],
+      [
+        "it/access-control-sop.md",
+        3
+      ],
+      [
+        "hr/leave-policy-2026.pdf",
+        1
+      ]
+    ]
+  },
+  "day09_multi_agent": {
+    "total_traces": 15,
+    "routing_distribution": {
+      "retrieval_worker": "8/15 (53%)",
+      "policy_tool_worker": "7/15 (46%)"
+    },
+    "avg_confidence": 0.627,
+    "avg_latency_ms": 1772,
+    "mcp_usage_rate": "3/15 (20%)",
+    "hitl_rate": "1/15 (6%)",
+    "top_sources": [
+      [
+        "policy/refund-v4.pdf",
+        9
+      ],
+      [
+        "it_helpdesk_faq.txt",
+        8
+      ],
+      [
+        "it/access-control-sop.md",
+        7
+      ],
+      [
+        "support/sla-p1-2026.pdf",
+        4
+      ],
+      [
+        "hr/leave-policy-2026.pdf",
+        2
+      ]
+    ]
+  },
+  "analysis": {
+    "confidence_delta": "▼ +0.067  (Day08=0.694 → Day09=0.627)",
+    "latency_delta": "▼ +440.000  (Day08=1332 → Day09=1772)",
+    "multi_hop_accuracy": "Day08: 0/0 (N/A) | Day09: xem supervisor_route trong traces (cross-doc queries → policy_tool_worker)",
+    "routing_visibility": "Day09: mỗi câu có supervisor_route + route_reason → explainable. Day08: tất cả đi thẳng retrieval, không có routing.",
+    "mcp_tools": "Day08: 0 MCP calls. Day09: 3/15 (20%) câu dùng MCP tools.",
+    "hitl": "Day08: không có HITL. Day09: 1/15 (6%) câu trigger human review.",
+    "debuggability": "Day09: test từng worker độc lập được, trace đầy đủ workers_called + mcp_tools_used. Day08: monolithic, khó isolate lỗi."
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "question": "Nhân viên vừa vào thử việc (trong probation period) muốn làm remote vì lý do cá nhân. Điều kiện là gì?",
+  "answer": "[1] 4.1 Điều kiện remote:\n- Nhân viên sau probation period có thể làm remote tối đa 2 ngày/tuần.\n- Team Lead phải phê duyệt lịch remote qua HR Portal.\n- Ngày onsite bắt buộc: Thứ 3 và Thứ 5 theo lịch team.\n\n4.2 Yêu cầu kỹ thuật khi remote:\n- Kết nối VPN bắt buộc khi làm việc với hệ thống nội bộ.\n- Camera bật trong các cuộc họp team.\n    Nguon: [hr/leave-policy-2026.pdf]\n\n[2] Hoàn tiền — Điều kiện áp dụng:\nYêu cầu được gửi trong vòng 7 ngày kể từ thời điểm xác nhận đơn hàng.\n\nNgoại lệ không được hoàn tiền:\n- Sản phẩm thuộc danh mục hàng kỹ thuật số (license key, subscription).\n- Đơn hàng đã áp dụng mã giảm giá đặc biệt theo chương trình khuyến mãi Flash Sale.\n- Sản phẩm đã được kích hoạt hoặc đăng ký tài khoản.\n    Nguon: [policy/refund-v4.pdf]\n\n[3] Tài liệu này quy định quy trình cấp phép truy cập vào các hệ thống nội bộ của công ty.\nÁp dụng cho tất cả nhân viên, contractor, và third-party vendor.\n    Nguon: [it/access-control-sop.md]",
+  "sources": [
+    "hr/leave-policy-2026.pdf",
+    "policy/refund-v4.pdf",
+    "it/access-control-sop.md"
+  ],
+  "confidence": 0.65,
+  "latency_ms": 21,
+  "chunks_retrieved": 3,
+  "workers_called": [
+    "retrieval_worker",
+    "synthesis_worker"
+  ],
+  "supervisor_route": "N/A",
+  "mcp_tools_used": [],
+  "hitl_triggered": false,
+  "policy_check": false,
+  "id": "q14",
+  "expected_sources": [
+    "hr_leave_policy.txt"
+  ],
+  "expected_answer": "Nhân viên trong probation period KHÔNG được phép làm remote. Chỉ nhân viên đã qua probation period mới được phép làm remote tối đa 2 ngày/tuần với điều kiện được Team Lead phê duyệt.",
+  "test_type": "single_worker",
+  "category": "HR Policy",
+  "difficulty": "medium",
+  "abstained": false
+}
